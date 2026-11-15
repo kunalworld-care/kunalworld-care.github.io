@@ -1,3 +1,4 @@
+
 (function(){
   var form = document.getElementById('query-form');
   var status = document.getElementById('form-status');
@@ -54,6 +55,7 @@
         if(res.success){
           status.textContent = 'Thank you, ' + name.split(' ')[0] + '. Your query has been sent - we will contact you shortly.';
           status.className = 'ok';
+          status.style.display = 'block';
           form.reset();
         } else {
           throw new Error('failed');
@@ -62,6 +64,7 @@
       .catch(function(){
         status.textContent = 'Sorry, something went wrong. Please try again in a moment.';
         status.className = 'bad';
+        status.style.display = 'block';
       })
       .finally(function(){
         btn.disabled = false; btn.textContent = 'Send Query';
