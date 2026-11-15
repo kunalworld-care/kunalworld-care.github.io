@@ -111,13 +111,19 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remov
     'Colostomy Bag Change':'₹1,000 / visit',
     'Basic Patient Care':'₹22,000 / month or ₹1,000 / day'
   };
+  var usdt = {
+    'Bed-ridden Patient Care':'approx 425 USDT / month',
+    'Tracheostomy Care':'approx 372 USDT / month',
+    'Colostomy Bag Change':'approx 11 USDT / visit',
+    'Basic Patient Care':'approx 234 USDT / month or approx 11 USDT / day'
+  };
   var params = new URLSearchParams(location.search);
   var paymentSection = document.getElementById('payment');
   var selected = params.get('service'), method = params.get('method');
   if(paymentSection && rates[selected] && (method === 'UPI' || method === 'Crypto')){
     var heading = paymentSection.querySelector('.sec-head');
     heading.querySelector('h2').textContent = method === 'UPI' ? 'Pay by UPI' : 'Pay with Crypto';
-    heading.querySelector('p').textContent = selected + ' - ' + rates[selected] + '. No enquiry has been sent. Pay only the amount agreed for your care plan.';
+    heading.querySelector('p').textContent = method === 'Crypto' ? selected + ' - ' + rates[selected] + ' (' + usdt[selected] + '). No enquiry has been sent. Pay only the amount agreed for your care plan. USDT amounts are approximate; 1 USDT is about ₹94.' : selected + ' - ' + rates[selected] + '. No enquiry has been sent. Pay only the amount agreed for your care plan.';
     var cards = paymentSection.querySelectorAll('.pay-card');
     cards.forEach(function(card, i){ card.hidden = method === 'UPI' ? i !== 0 : i !== 1; card.style.display = card.hidden ? 'none' : ''; });
     paymentSection.querySelector('.pay-grid').style.gridTemplateColumns = 'minmax(0, 1fr)';
