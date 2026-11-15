@@ -61,7 +61,7 @@
 
     var data = new FormData();
     data.append('access_key', 'a63c67d4-cf97-4882-9a62-556cdfa590b0');
-    data.append('from_name', 'KunalWorld Website');
+    data.append('from_name', 'Kunalji Nursing Care Service Website');
     data.append('name', name);
     data.append('phone', phone);
     data.append('email', email);
@@ -72,7 +72,7 @@
       data.append('subject', 'New checkout - ' + service + ' (' + pay + ')');
       data.append('message', 'CHECKOUT FORM - customer is proceeding to ' + pay + ' payment for ' + service + '.\nPatient note: ' + (msg || '(none)'));
     } else {
-      data.append('subject', 'New service request - ' + (service || 'KunalWorld website'));
+      data.append('subject', 'New service request - ' + (service || 'Kunalji Nursing Care Service website'));
       data.append('message', msg);
     }
     var payUrl = 'pricing.html?service=' + encodeURIComponent(service) + '&method=' + encodeURIComponent(pay) + '#payment';
@@ -179,7 +179,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remov
     });
     var button = document.getElementById('send-btn');
     button.textContent = query ? 'Send Enquiry' : 'Continue to Payment';
-    document.getElementById('route-note').textContent = unsure ? 'Not sure which care is right? Share your needs and we will help you choose. Your enquiry goes to KunalWorld.' : query ? 'Your service details and contact information will be sent to KunalWorld. Payment can be arranged later.' : 'Checkout details: enter your contact details, then continue to payment. Your details are sent to KunalWorld so we can confirm your care plan.';
+    document.getElementById('route-note').textContent = unsure ? 'Not sure which care is right? Share your needs and we will help you choose. Your enquiry goes to Kunalji Nursing Care Service.' : query ? 'Your service details and contact information will be sent to Kunalji Nursing Care Service. Payment can be arranged later.' : 'Checkout details: enter your contact details, then continue to payment. Your details are sent to Kunalji Nursing Care Service so we can confirm your care plan.';
     var auto = !query ? '' : unsure ? 'Please help me choose the right care service. ' : service ? 'I would like to avail ' + service + ' (' + rates[service] + '). ' : '';
     if(!msg.value.trim() || msg.value === lastAutoMessage) { msg.value = auto; lastAutoMessage = auto; }
     document.getElementById('e-service').style.display='none';
