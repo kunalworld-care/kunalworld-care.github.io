@@ -131,3 +131,26 @@ section{padding:70px 0}.page-intro{background:#eaf5f1;border-bottom:1px solid va
   .pay-panel p{color:var(--muted);font-size:.92rem;margin-bottom:8px}
   .pay-panel .pp-note{font-size:.82rem;color:#7d90a3;margin:8px 0 0}
   .pay-panel .upi-row{margin-top:10px}
+
+  /* Hero background slideshow (homepage) */
+  .hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+  .hero-bg-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;animation:heroSlide 32s ease-in-out infinite}
+  .hero-bg-slide:nth-child(2){animation-delay:8s}
+  .hero-bg-slide:nth-child(3){animation-delay:16s}
+  .hero-bg-slide:nth-child(4){animation-delay:24s}
+  @keyframes heroSlide{0%{opacity:0}4%{opacity:1}25%{opacity:1}29%{opacity:0}100%{opacity:0}}
+  .hero-bg-overlay{position:absolute;inset:0;background:linear-gradient(120deg,rgba(18,59,58,.86) 0%,rgba(23,86,91,.80) 60%,rgba(22,125,113,.78) 100%)}
+  .hero .hero-bg ~ .wrap{z-index:2}
+
+  /* Floating quote slideshow (homepage bottom) */
+  .quotes{padding-top:0}
+  .quote-rotator{position:relative;max-width:780px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:22px;padding:52px 58px 44px;text-align:center;box-shadow:0 24px 60px rgba(15,42,67,.13)}
+  .quote-rotator:before{content:'\201C';position:absolute;top:6px;left:26px;font-size:6.5rem;line-height:1;color:var(--teal);opacity:.18;font-family:Georgia,serif}
+  .quote-slide{display:none;margin:0}
+  .quote-slide.active{display:block;animation:enter .6s ease-out both}
+  .quote-slide p{font-size:clamp(1.15rem,2.2vw,1.45rem);font-weight:600;color:var(--navy);line-height:1.5;font-style:italic}
+  .quote-slide cite{display:block;margin-top:16px;font-style:normal;font-weight:700;font-size:.95rem;color:var(--teal-dark)}
+  .quote-dots{display:flex;gap:10px;justify-content:center;margin-top:22px}
+  .quote-dots button{width:11px;height:11px;border-radius:50%;border:none;background:#c4d6d3;cursor:pointer;padding:0;transition:.2s}
+  .quote-dots button.active{background:var(--teal);transform:scale(1.25)}
+  @media(max-width:760px){.quote-rotator{padding:40px 24px 32px}.quote-rotator:before{left:14px;font-size:5rem}}

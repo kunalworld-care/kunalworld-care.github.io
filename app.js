@@ -196,3 +196,42 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remov
   }
   update();
 })();
+
+/* Homepage quote slideshow - rotates any number of .quote-slide blocks.
+   Respects reduced-motion; pauses on hover/focus. */
+(function(){
+  var rot = document.getElementById('quote-rotator');
+  if(!rot) return;
+  var slides = rot.querySelectorAll('.quote-slide');
+  if(slides.length < 2) return;
+  var dotsWrap = document.getElementById('quote-dots');
+  var i = 0, timer = null;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dots = [];
+  if(dotsWrap){
+    Array.prototype.forEach.call(slides, function(_, n){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Show message ' + (n + 1));
+      if(n === 0) b.className = 'active';
+      b.addEventListener('click', function(){ go(n); restart(); });
+      dotsWrap.appendChild(b);
+      dots.push(b);
+    });
+  }
+  function go(n){
+    slides[i].classList.remove('active');
+    if(dots[i]) dots[i].classList.remove('active');
+    i = (n + slides.length) % slides.length;
+    slides[i].classList.add('active');
+    if(dots[i]) dots[i].classList.add('active');
+  }
+  function start(){ if(reduce || timer) return; timer = setInterval(function(){ go(i + 1); }, 6000); }
+  function stop(){ if(timer){ clearInterval(timer); timer = null; } }
+  function restart(){ stop(); start(); }
+  rot.addEventListener('mouseenter', stop);
+  rot.addEventListener('mouseleave', start);
+  rot.addEventListener('focusin', stop);
+  rot.addEventListener('focusout', start);
+  start();
+})();
