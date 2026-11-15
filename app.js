@@ -84,6 +84,7 @@
           status.style.display = 'block';
           form.reset();
           form.dispatchEvent(new Event('reset-complete'));
+          status.scrollIntoView({behavior:'smooth', block:'center'});
         } else {
           throw new Error('failed');
         }
@@ -94,7 +95,8 @@
         status.style.display = 'block';
       })
       .finally(function(){
-        btn.disabled = false; btn.textContent = 'Send Enquiry';
+        btn.disabled = false;
+        btn.textContent = document.getElementById('f-service').value === 'Not sure - help me choose' || document.getElementById('f-pay').value === 'Pay later' ? 'Send Enquiry' : 'Continue to Payment';
       });
   });
 })();
