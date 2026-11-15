@@ -3,155 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KunalWorld | Home Nursing Care in Jalandhar</title>
+<title>Home | KunalWorld Home Nursing</title>
 <meta name="description" content="KunalWorld - professional home nursing care in Jalandhar, Punjab. Bed-ridden patient care, tracheostomy care, colostomy bag change and basic patient care at your home.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d9488'/%3E%3Cpath d='M32 16v32M16 32h32' stroke='white' stroke-width='9' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --teal:#0d9488; --teal-dark:#0f766e; --navy:#0f2a43; --navy-2:#16406b;
-    --ink:#1e293b; --muted:#5b6b7f; --bg:#f6f9fb; --card:#ffffff; --line:#e3eaf2;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
-  h1,h2,h3{color:var(--navy);line-height:1.2}
-
-  /* Nav */
-  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .nav{display:flex;align-items:center;justify-content:space-between;height:66px}
-  .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-  .brand svg{width:34px;height:34px}
-  .brand span{font-weight:800;font-size:1.25rem;color:var(--navy);letter-spacing:-.02em}
-  .brand span em{font-style:normal;color:var(--teal)}
-  .nav-links{display:flex;gap:26px;align-items:center}
-  .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:.95rem}
-  .nav-links a:hover{color:var(--teal)}
-  .nav-links a.btn{color:#fff}
-  .nav-links a.btn:hover{color:#fff}
-  .btn{display:inline-block;background:var(--teal);color:#fff;text-decoration:none;font-weight:700;padding:12px 26px;border-radius:10px;border:none;cursor:pointer;font-size:1rem;transition:.2s}
-  .btn:hover{background:var(--teal-dark);transform:translateY(-1px)}
-  .btn.ghost{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
-  .btn.ghost:hover{border-color:var(--teal);color:var(--teal)}
-  .btn.sm{padding:9px 20px;font-size:.92rem}
-  @media(max-width:760px){.nav-links a:not(.btn){display:none}}
-
-  /* Hero */
-  .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 55%,#0e6f68 100%);color:#fff;padding:88px 0 96px;position:relative;overflow:hidden}
-  .hero:after{content:'';position:absolute;right:-140px;top:-140px;width:460px;height:460px;border-radius:50%;background:rgba(13,148,136,.25)}
-  .hero:before{content:'';position:absolute;left:-120px;bottom:-160px;width:380px;height:380px;border-radius:50%;background:rgba(255,255,255,.06)}
-  .hero .wrap{position:relative;z-index:2}
-  .hero .eyebrow{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);color:#d7f3ef;font-weight:600;font-size:.85rem;padding:6px 14px;border-radius:999px;margin-bottom:20px}
-  .hero h1{color:#fff;font-size:clamp(2rem,4.6vw,3.3rem);font-weight:800;letter-spacing:-.02em;max-width:760px}
-  .hero h1 em{font-style:normal;color:#5eead4}
-  .hero p{margin:20px 0 32px;font-size:1.12rem;color:#cfe0ee;max-width:640px}
-  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
-  .chips{display:flex;gap:12px;flex-wrap:wrap;margin-top:38px}
-  .chip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:8px 16px;font-size:.88rem;font-weight:600;color:#e6f4f1}
-  .chip svg{width:15px;height:15px;stroke:#5eead4}
-
-  section{padding:80px 0}
-  .sec-head{text-align:center;max-width:680px;margin:0 auto 52px}
-  .sec-head .tag{color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.8rem}
-  .sec-head h2{font-size:clamp(1.6rem,3vw,2.3rem);margin:10px 0 12px;letter-spacing:-.02em}
-  .sec-head p{color:var(--muted)}
-
-  /* Services */
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:30px 26px;transition:.25s;box-shadow:0 1px 3px rgba(15,42,67,.05)}
-  .card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(15,42,67,.1);border-color:#cfe8e4}
-  .icon{width:52px;height:52px;border-radius:13px;background:linear-gradient(135deg,#e6f7f4,#d3efec);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
-  .icon svg{width:26px;height:26px;stroke:var(--teal);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-  .card h3{font-size:1.12rem;margin-bottom:10px}
-  .card p{color:var(--muted);font-size:.95rem}
-
-  /* About */
-  .about{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .about-flex{display:flex;gap:54px;align-items:center;flex-wrap:wrap}
-  .about-text{flex:1;min-width:290px}
-  .about-text h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:16px;letter-spacing:-.02em}
-  .about-text p{color:var(--muted);margin-bottom:14px}
-  .points{list-style:none;margin-top:8px}
-  .points li{display:flex;gap:12px;margin-bottom:12px;color:var(--ink);font-weight:500}
-  .points svg{flex:none;width:22px;height:22px;stroke:var(--teal);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
-  .about-badge{flex:0 0 300px;background:linear-gradient(160deg,var(--navy),var(--navy-2));border-radius:20px;padding:38px 30px;color:#fff;text-align:center}
-  .about-badge .big{font-size:3rem;font-weight:800;color:#5eead4;letter-spacing:-.03em}
-  .about-badge .lbl{color:#cfe0ee;font-weight:600;margin-top:4px}
-  .about-badge hr{border:none;border-top:1px solid rgba(255,255,255,.15);margin:22px 0}
-  .about-badge small{color:#a9c3d8;font-size:.85rem;line-height:1.5;display:block}
-
-  /* Payment */
-  .pay-card{max-width:640px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:36px;text-align:center;box-shadow:0 1px 3px rgba(15,42,67,.05)}
-  .pay-card .coin{display:inline-flex;align-items:center;gap:9px;background:#ecfdf5;border:1px solid #bbf7d0;color:#047857;font-weight:700;padding:7px 16px;border-radius:999px;font-size:.9rem;margin-bottom:18px}
-  .pay-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:22px;max-width:760px;margin:0 auto}
-  .pay-grid .pay-card{margin:0}
-  .qr-box{width:170px;height:170px;margin:20px auto;border:2px dashed #cbd8e4;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#93a7bb;font-size:.85rem;font-weight:600;background:#fbfdfe;text-align:center}
-  .qr-img{width:180px;height:180px;margin:16px auto 8px;border-radius:12px;border:1px solid var(--line);display:block}
-  .addr-box{background:#f1f5f9;border:1px solid var(--line);border-radius:10px;padding:14px 16px;color:#8ba0b5;font-size:.92rem;font-weight:600;margin:6px auto 16px;max-width:420px;word-break:break-all}
-  .upi-row{display:flex;gap:10px;justify-content:center;align-items:stretch;margin:6px auto 16px;max-width:420px}
-  .upi-id{flex:1;background:#f1f5f9;border:1px solid var(--line);border-radius:10px;padding:13px 14px;font-weight:700;color:var(--navy);font-size:.95rem;word-break:break-all;display:flex;align-items:center;justify-content:center}
-  .copy-btn{flex:none;background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:0 16px;font:inherit;font-weight:700;font-size:.88rem;color:var(--teal);cursor:pointer;transition:.15s}
-  .copy-btn:hover{border-color:var(--teal)}
-  .pay-card p{color:var(--muted);font-size:.95rem}
-  .pay-tag{display:inline-block;background:#eef4fb;border:1px solid #d7e6f5;color:var(--navy-2);font-weight:700;padding:7px 16px;border-radius:999px;font-size:.9rem;margin-bottom:18px}
-
-  /* Contact */
-  .contact{background:linear-gradient(180deg,#f6f9fb, #eef5f4)}
-  .contact-flex{display:flex;gap:48px;flex-wrap:wrap;align-items:flex-start}
-  .contact-info{flex:1;min-width:280px;padding-top:10px}
-  .contact-info h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:14px;letter-spacing:-.02em}
-  .contact-info p{color:var(--muted);margin-bottom:22px}
-  .contact-info ul{list-style:none}
-  .contact-info li{display:flex;gap:12px;margin-bottom:14px;color:var(--ink);font-weight:500;align-items:center}
-  .contact-info li svg{width:20px;height:20px;stroke:var(--teal);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-  form{flex:1.2;min-width:300px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:34px;box-shadow:0 6px 24px rgba(15,42,67,.06)}
-  .fld{margin-bottom:18px}
-  label{display:block;font-weight:600;font-size:.9rem;margin-bottom:7px;color:var(--navy)}
-  label span{color:#e11d48}
-  input,textarea{width:100%;padding:13px 15px;border:1.5px solid var(--line);border-radius:10px;font:inherit;font-size:.97rem;background:#fbfdfe;transition:.15s}
-  input:focus,textarea:focus{outline:none;border-color:var(--teal);background:#fff;box-shadow:0 0 0 3px rgba(13,148,136,.12)}
-  textarea{min-height:120px;resize:vertical}
-  .hint{font-size:.8rem;color:#94a6b8;margin-top:5px}
-  .err{color:#dc2626;font-size:.82rem;margin-top:5px;display:none}
-  #form-status{margin-top:16px;padding:14px 16px;border-radius:10px;font-weight:600;font-size:.95rem;display:none}
-  #form-status.ok{display:block;background:#ecfdf5;color:#047857;border:1px solid #bbf7d0}
-  #form-status.bad{display:block;background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
-  .hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
-
-  footer{background:var(--navy);color:#9fb8cd;padding:38px 0;text-align:center}
-  footer .brand span{color:#fff}
-  footer p{margin-top:12px;font-size:.9rem}
-</style>
-</head>
-<body>
-
-<header>
-  <div class="wrap nav">
-    <a class="brand" href="#top">
+<link rel="stylesheet" href="styles.css"><script src="app.js" defer></script></head><body><a class="skip" href="#main">Skip to content</a><header><div class="wrap nav"><a class="brand" href="index.html">
       <svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0d9488"/><path d="M32 16v32M16 32h32" stroke="white" stroke-width="9" stroke-linecap="round"/></svg>
       <span>Kunal<em>World</em></span>
-    </a>
-    <nav class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a href="#payment">Payment</a>
-      <a href="#contact">Contact</a>
-      <a class="btn sm" href="#contact">Request Care</a>
-    </nav>
-  </div>
-</header>
-
-<section class="hero" id="top">
+    </a><button class="menu-toggle" id="menu-toggle" aria-controls="primary-nav" aria-expanded="false">Menu</button><nav id="primary-nav" class="nav-links" aria-label="Main navigation"><a href="index.html" aria-current="page">Home</a><a href="services.html">Services</a><a href="pricing.html">Pricing</a><a href="about.html">About</a><a href="contact.html">Contact</a><a class="btn sm" href="contact.html#query-form">Request Care</a></nav></div></header><main id="main"><section class="hero" id="top">
   <div class="wrap">
     <span class="eyebrow">Home Nursing Care &middot; Jalandhar, Punjab</span>
     <h1>Professional nursing care for your loved ones, <em>at home</em>.</h1>
     <p>KunalWorld provides trained, hands-on bedside nursing at your home - from complete care for bed-ridden patients to tracheostomy care, colostomy bag changes and everyday patient support.</p>
     <div class="hero-cta">
-      <a class="btn" href="#contact">Request Care</a>
-      <a class="btn ghost" href="#services">View Services</a>
+      <a class="btn" href="contact.html#query-form">Request Care</a>
+      <a class="btn ghost" href="services.html">View Services</a>
     </div>
     <div class="chips">
       <span class="chip"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Trained hands-on nurse</span>
@@ -159,9 +27,7 @@
       <span class="chip"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Jalandhar &amp; nearby areas</span>
     </div>
   </div>
-</section>
-
-<section id="services">
+</section><section id="services">
   <div class="wrap">
     <div class="sec-head">
       <div class="tag">Our Services</div>
@@ -172,202 +38,26 @@
       <div class="card">
         <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6"/><path d="M3 18h18"/><path d="M7 10V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><path d="M12 6V4"/></svg></div>
         <h3>Bed-ridden Patient Care</h3>
-        <p>Complete daily care for patients confined to bed - regular position changes, hygiene and sponge bath, feeding support and bedsore prevention.</p>
+        <p>Complete daily care for patients confined to bed - regular position changes, hygiene and sponge bath, feeding support and bedsore prevention.</p><a class="card-link" href="contact.html#query-form">Enquire about care &rarr;</a>
       </div>
       <div class="card">
         <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/><path d="M12 3v2"/></svg></div>
         <h3>Tracheostomy Care</h3>
-        <p>Safe suctioning, tube and stoma care, humidification and careful monitoring - handled calmly by a nurse experienced with tracheostomy patients.</p>
+        <p>Safe suctioning, tube and stoma care, humidification and careful monitoring - handled calmly by a nurse experienced with tracheostomy patients.</p><a class="card-link" href="contact.html#query-form">Enquire about care &rarr;</a>
       </div>
       <div class="card">
         <div class="icon"><svg viewBox="0 0 24 24"><path d="M6 3h12l1 7H5l1-7z"/><path d="M5 10v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-8"/><path d="M12 14v4"/></svg></div>
         <h3>Colostomy Bag Change</h3>
-        <p>Hygienic bag changes with gentle skin care around the stoma, keeping your loved one clean, comfortable and free from infection or irritation.</p>
+        <p>Hygienic bag changes with gentle skin care around the stoma, keeping your loved one clean, comfortable and free from infection or irritation.</p><a class="card-link" href="contact.html#query-form">Enquire about care &rarr;</a>
       </div>
       <div class="card">
         <div class="icon"><svg viewBox="0 0 24 24"><path d="M20.8 8.6a5.5 5.5 0 0 0-9.8-3.4L11 6.2l-1-1a5.5 5.5 0 0 0-7.8 7.8l8.8 8.8a2 2 0 0 0 2.8 0l7-7a5.5 5.5 0 0 0 0-6.2z"/><path d="M6 12h3l2-3 2 5 2-2h3"/></svg></div>
         <h3>Basic Patient Care</h3>
-        <p>Medication reminders, checking vitals, bathing and grooming, mobility help, and kind companionship for elderly or recovering patients.</p>
+        <p>Medication reminders, checking vitals, bathing and grooming, mobility help, and kind companionship for elderly or recovering patients.</p><a class="card-link" href="contact.html#query-form">Enquire about care &rarr;</a>
       </div>
     </div>
   </div>
-</section>
-
-<section class="about" id="about">
-  <div class="wrap about-flex">
-    <div class="about-text">
-      <div class="tag" style="color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:.8rem">About KunalWorld</div>
-      <h2>Care from a nurse who works with his hands and his heart</h2>
-      <p>KunalWorld is run by Kunal Kumar, a trained bedside nurse based in Jalandhar, Punjab. He has spent his career caring for patients at the bedside - the quiet, skilled, everyday work that helps families breathe easier.</p>
-      <p>When you call KunalWorld, you speak directly with the nurse who will care for your loved one. No agencies, no middlemen.</p>
-      <ul class="points">
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Personal attention - the same nurse, every visit</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Experience with critical and long-term home patients</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Clear communication with the family, always</li>
-      </ul>
-    </div>
-    <div class="about-badge">
-      <div class="big">100%</div>
-      <div class="lbl">Care at your home</div>
-      <hr>
-      <small>Serving families across Jalandhar and nearby areas of Punjab with dependable, dignified home nursing.</small>
-    </div>
-  </div>
-</section>
-
-<section id="payment">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="tag">Payment</div>
-      <h2>Pay for services</h2>
-      <p>Simple, direct payment options for the families we serve - near or far.</p>
-    </div>
-    <div class="pay-grid">
-      <div class="pay-card">
-        <span class="pay-tag">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16406b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:5px"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10h18M8 15h4"/></svg>UPI (Recommended)
-        </span>
-        <p>Scan with any UPI app (GPay, PhonePe, Paytm) or pay directly to our UPI ID.</p>
-        <img class="qr-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHp0lEQVR4nO3cwW1jNxhG0ThwAekjbaTstJE+0oGyHSABMQgv/fPJ52wH1pMlzwUXH/jxer1+Aej8Ov0GgHcjK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjnzg//9vsf1fu4xN9//bn4153fd/3KO9bvauo3Oveudj7JqVd+op1Pw2kFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYhtrWzXzu1Kd0wtZe987rkN7trOK9+5db7zuWvnvl+nFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgdnBlu3Zu4XfnonFt6l7YOze4U5/G2tRtxDum/i84rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsbGV7ROd22jeuVi9c5O688pT38J347QCxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsSsbL/Izg2s5155anV67j7acxtcfp7TChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQG1vZfrdF45171rVz7/ncjvbO/e7a+/1fcFoBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWIHV7bnlqN3unP9+cSffT/f7f+C0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEPt4vV7T7+Exzi1Hz90Le865De6Oqft3+ZHTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQ21rZTt1Xeue+c+3O9eedn8baExe655z7JHde2WkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYgdXNnumNqkPnF1uuY3+ho7f1fvdwuy0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKENta2e64cyl7bnd4ztTWee3cfcN33oM7ZeqTXHNaAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFin1MPfr/7O8+Z+n13Npo7z51ajp577nf7i3VaAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFiWyvbqVtUdxaNU7d7Tj33TlO31d65o30/TitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQGxrZTu1WTx3X+kTnfskp+4bPveX88T7aJ94D67TChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQO3iX7Z1bWHeO/ujOJfTUd3TnDbtTz93htALEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxD5er9ehl55a+O2YWp1OfVZTe9Y7N7h3fkc7rGyBNyErQExWgJisADFZAWKyAsRkBYjJChCTFSB2cGW747vdOPvEjeadpm5+fb+98s4rO60AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGtle2dq8Qn3pO644n7zil33hn8xE9yzWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYgdXNnueOK9od7Vj554p+yd98LumHpXTitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOxz+g38t3M7yyduNJ/o3L5z6rO687nrT/Lc/5Q1pxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVILa1sr1z7bq288rnVonnbhW98xbVKXf+xd75177DaQWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiG2tbO/c0a7due594g27U7eoTv3s2tRzz73yDqcVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSD28Xq9Rh58512n50ztaO9c905tQ6fWrjvuXGCvOa0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALE3XNlObTR3TN05usNNxl/zyueea2ULPIasADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY1sr2zns01+7cd+44t3Z9v03qE03dsLvzXKcVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSA2dpftE925/nzijnaH3+h+TitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOxz54fvXJ3u2Fk0nlu77rjzPtqpu2zPPffc9zv1aexwWgFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYlsr27U77+Ccus10ame5fu4Tb35du3PNfM7UXnnNaQWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiB1c2a498YbO91vo3rmFvdPUe37i/cpOK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitAbGxl+0Q7m8WdReP7rXvPObcrPfct7Pzl7Dz33MbaaQWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiFnZZr7bRnPH1H3D576jtSfe3bvDaQWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiI2tbM/tLKfceXvr2p0L3alF8o73+3ve4bQCxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsQ+Xq/X//7h97uhc2qjuWPnPd/5+3pXP+/cmnnnlZ1WgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY1soW4N+cVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWL/AE51AYfZ5PFAAAAAAElFTkSuQmCC" alt="Scan to pay KunalWorld by UPI">
-        <div class="upi-row">
-          <div class="upi-id" id="upi-id">mr.kumar.1062@superyes</div>
-          <button class="copy-btn" type="button" id="copy-upi">Copy</button>
-        </div>
-        <p>After paying, please mention the patient's name in the payment note.</p>
-      </div>
-      <div class="pay-card">
-        <span class="coin">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 8h8M12 8v9M9.5 12h5"/></svg>
-          Crypto Payment (USDT &amp; more)
-        </span>
-        <p>Families living abroad or outside Punjab can pay securely with crypto through NOWPayments - any amount, USDT and 300+ coins supported (minimum about 10 USDT).</p>
-        <a class="btn" href="https://nowpayments.io/donation/kunalworld" target="_blank" rel="noopener" style="margin:14px 0 16px">Pay with Crypto &#8594;</a>
-        <p style="font-size:.85rem">Secure checkout by NOWPayments. Choose your coin and amount on the next page.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="contact" id="contact">
-  <div class="wrap contact-flex">
-    <div class="contact-info">
-      <h2>Send us your query</h2>
-      <p>Tell us about the patient and the care you need. We will get back to you as soon as possible to discuss timings, care plan and charges.</p>
-      <ul>
-        <li><svg viewBox="0 0 24 24"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Jalandhar, Punjab, India</li>
-        <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Quick response to every query</li>
-        <li><svg viewBox="0 0 24 24"><path d="M12 3l7 4v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V7l7-4z"/></svg>Your details stay private</li>
-      </ul>
-    </div>
-    <form id="query-form" novalidate>
-      <div class="fld">
-        <label for="f-name">Your Name <span>*</span></label>
-        <input type="text" id="f-name" name="name" placeholder="Full name" autocomplete="name">
-        <div class="err" id="e-name">Please enter your name.</div>
-      </div>
-      <div class="fld">
-        <label for="f-phone">Phone Number <span>*</span></label>
-        <input type="tel" id="f-phone" name="phone" placeholder="10-digit mobile number" autocomplete="tel">
-        <div class="hint">Indian mobile number, e.g. 98765 43210</div>
-        <div class="err" id="e-phone">Please enter a valid 10-digit Indian mobile number.</div>
-      </div>
-      <div class="fld">
-        <label for="f-email">Email Address <span>*</span></label>
-        <input type="email" id="f-email" name="email" placeholder="you@example.com" autocomplete="email">
-        <div class="err" id="e-email">Please enter a valid email address.</div>
-      </div>
-      <div class="fld">
-        <label for="f-msg">Message <span>*</span></label>
-        <textarea id="f-msg" name="message" placeholder="Tell us about the patient and the care needed - illness, age, type of care, preferred timings..."></textarea>
-        <div class="err" id="e-msg">Please write a short message.</div>
-      </div>
-      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
-      <button type="submit" class="btn" id="send-btn" style="width:100%">Send Query</button>
-      <div id="form-status" role="status"></div>
-    </form>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <a class="brand" href="#top" style="justify-content:center">
-      <svg viewBox="0 0 64 64" width="30" height="30"><rect width="64" height="64" rx="14" fill="#0d9488"/><path d="M32 16v32M16 32h32" stroke="white" stroke-width="9" stroke-linecap="round"/></svg>
-      <span>Kunal<em style="color:#5eead4">World</em></span>
-    </a>
-    <p>Home Nursing Care &middot; Jalandhar, Punjab &middot; &copy; 2026 KunalWorld</p>
-  </div>
-</footer>
-
-<script>
-(function(){
-  var form = document.getElementById('query-form');
-  var status = document.getElementById('form-status');
-  var btn = document.getElementById('send-btn');
-
-  function show(id, on){ document.getElementById(id).style.display = on ? 'block' : 'none'; }
-
-  function validPhone(v){
-    var d = v.replace(/\D/g,'');
-    if (d.length === 12 && d.indexOf('91') === 0) d = d.slice(2);
-    if (d.length === 11 && d.charAt(0) === '0') d = d.slice(1);
-    return /^[6-9]\d{9}$/.test(d);
-  }
-  function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
-
-  var copyBtn = document.getElementById('copy-upi');
-  if(copyBtn){ copyBtn.addEventListener('click', function(){
-    var id = document.getElementById('upi-id').textContent.trim();
-    function done(){ copyBtn.textContent='Copied!'; setTimeout(function(){ copyBtn.textContent='Copy'; },1800); }
-    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(id).then(done).catch(function(){ fallback(); }); } else { fallback(); }
-    function fallback(){ var t=document.createElement('textarea'); t.value=id; document.body.appendChild(t); t.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(t); done(); }
-  }); }
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var name = document.getElementById('f-name').value.trim();
-    var phone = document.getElementById('f-phone').value.trim();
-    var email = document.getElementById('f-email').value.trim();
-    var msg = document.getElementById('f-msg').value.trim();
-
-    var ok = true;
-    show('e-name', name.length >= 2 ? false : (ok=false, true));
-    show('e-phone', validPhone(phone) ? false : (ok=false, true));
-    show('e-email', validEmail(email) ? false : (ok=false, true));
-    show('e-msg', msg.length >= 5 ? false : (ok=false, true));
-    if(!ok){ status.className=''; status.style.display='none'; return; }
-
-    btn.disabled = true; btn.textContent = 'Sending...';
-    status.className=''; status.style.display='none';
-
-    var data = new FormData();
-    data.append('access_key', 'a63c67d4-cf97-4882-9a62-556cdfa590b0');
-    data.append('subject', 'New care query - KunalWorld website');
-    data.append('from_name', 'KunalWorld Website');
-    data.append('name', name);
-    data.append('phone', phone);
-    data.append('email', email);
-    data.append('message', msg);
-
-    fetch('https://api.web3forms.com/submit', { method:'POST', body:data })
-      .then(function(r){ return r.json(); })
-      .then(function(res){
-        if(res.success){
-          status.textContent = 'Thank you, ' + name.split(' ')[0] + '. Your query has been sent - we will contact you shortly.';
-          status.className = 'ok';
-          form.reset();
-        } else {
-          throw new Error('failed');
-        }
-      })
-      .catch(function(){
-        status.textContent = 'Sorry, something went wrong. Please try again in a moment.';
-        status.className = 'bad';
-      })
-      .finally(function(){
-        btn.disabled = false; btn.textContent = 'Send Query';
-      });
-  });
-})();
-</script>
-</body>
-</html>
+</section><section class="soft"><div class="wrap"><div class="sec-head"><div class="tag">Getting started</div><h2>A simple path to care at home</h2></div><div class="steps"><div><div class="step-num">01</div><h3>Tell us what you need</h3><p>Send a query with the patient's care needs and your preferred timings.</p></div><div><div class="step-num">02</div><h3>Discuss a care plan</h3><p>Talk through the patient's condition, the support needed and the charges.</p></div><div><div class="step-num">03</div><h3>Arrange home care</h3><p>Confirm availability and agree on the care schedule before the visit.</p></div></div></div></section><section><div class="wrap"><div class="cta-panel"><div><h2>Let's plan the right care.</h2><p>Share your loved one's needs, location and preferred timings. We'll discuss a care plan and charges with you.</p></div><a class="btn" href="contact.html#query-form">Request Care &rarr;</a></div></div></section></main><footer><div class="wrap"><a class="brand" href="index.html">
+      <svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0d9488"/><path d="M32 16v32M16 32h32" stroke="white" stroke-width="9" stroke-linecap="round"/></svg>
+      <span>Kunal<em>World</em></span>
+    </a><nav class="footer-links" aria-label="Footer navigation"><a href="index.html">Home</a><a href="services.html">Services</a><a href="pricing.html">Pricing</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav><p>Home Nursing Care &middot; Jalandhar, Punjab &middot; &copy; 2026 KunalWorld</p></div></footer></body></html>
