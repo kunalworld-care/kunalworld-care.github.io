@@ -45,22 +45,18 @@
     show('e-service', !service);
     show('e-pay', !unsure && !pay);
     if(!service || (!unsure && !pay)) return;
-    if(!unsure && (pay === 'UPI' || pay === 'Crypto')){
-      // No Web3Forms request is made on either payment route.
-      location.href = 'pricing.html?service=' + encodeURIComponent(service) + '&method=' + encodeURIComponent(pay) + '#payment';
-      return;
-    }
+    var payRoute = !unsure && (pay === 'UPI' || pay === 'Crypto');
     var ok = true;
     show('e-name', name.length >= 2 ? false : (ok=false, true));
     show('e-phone', validPhone(phone) ? false : (ok=false, true));
     show('e-email', validEmail(email) ? false : (ok=false, true));
     if(serviceEl) show('e-service', service ? false : (ok=false, true));
     if(payEl) show('e-pay', unsure || pay ? false : (ok=false, true));
-    show('e-msg', msg.length >= 5 ? false : (ok=false, true));
+    show('e-msg', (payRoute || msg.length >= 5) ? false : (ok=false, true));
     if(!ok){ status.className=''; status.style.display='none'; return; }
 
     if(form.elements.botcheck.checked) return;
-    btn.disabled = true; btn.textContent = 'Sending...';
+    btn.disabled = true; btn.textContent = payRoute ? 'Saving your details...' : 'Sending...';
     status.className=''; status.style.display='none';
 
     var data = new FormData();
@@ -72,8 +68,25 @@
     if(service) data.append('service_requested', service);
     data.append('payment_method', unsure ? 'Advice requested - payment not selected' : pay);
     data.append('service_details', serviceEl.options[serviceEl.selectedIndex].text);
-    data.append('subject', 'New service request - ' + (service || 'KunalWorld website'));
-    data.append('message', msg);
+    if(payRoute){
+      data.append('subject', 'New checkout - ' + service + ' (' + pay + ')');
+      data.append('message', 'CHECKOUT FORM - customer is proceeding to ' + pay + ' payment for ' + service + '.\nPatient note: ' + (msg || '(none)'));
+    } else {
+      data.append('subject', 'New service request - ' + (service || 'KunalWorld website'));
+      data.append('message', msg);
+    }
+    var payUrl = 'pricing.html?service=' + encodeURIComponent(service) + '&method=' + encodeURIComponent(pay) + '#payment';
+    if(payRoute){
+      // Never block payment: continue whether or not the email send works.
+      var went = false;
+      var go = function(ok){ if(went) return; went = true; try{ sessionStorage.setItem('kw-checkout', ok ? 'sent' : 'failed'); }catch(e){} location.href = payUrl; };
+      var timer = setTimeout(function(){ go(false); }, 8000);
+      fetch('https://api.web3forms.com/submit', { method:'POST', body:data })
+        .then(function(r){ return r.json(); })
+        .then(function(res){ clearTimeout(timer); go(!!(res && res.success)); })
+        .catch(function(){ clearTimeout(timer); go(false); });
+      return;
+    }
 
     fetch('https://api.web3forms.com/submit', { method:'POST', body:data })
       .then(function(r){ return r.json(); })
@@ -123,7 +136,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remov
   if(paymentSection && rates[selected] && (method === 'UPI' || method === 'Crypto')){
     var heading = paymentSection.querySelector('.sec-head');
     heading.querySelector('h2').textContent = method === 'UPI' ? 'Pay by UPI' : 'Pay with Crypto';
-    heading.querySelector('p').textContent = method === 'Crypto' ? selected + ' - ' + rates[selected] + ' (' + usdt[selected] + '). No enquiry has been sent. Pay only the amount agreed for your care plan. USDT amounts are approximate; 1 USDT is about ₹94.' : selected + ' - ' + rates[selected] + '. No enquiry has been sent. Pay only the amount agreed for your care plan.';
+    heading.querySelector('p').textContent = method === 'Crypto' ? selected + ' - ' + rates[selected] + ' (' + usdt[selected] + '). Pay only the amount agreed for your care plan. USDT amounts are approximate; 1 USDT is about ₹94.' : selected + ' - ' + rates[selected] + '. Pay only the amount agreed for your care plan.';
     var cards = paymentSection.querySelectorAll('.pay-card');
     cards.forEach(function(card, i){ card.hidden = method === 'UPI' ? i !== 0 : i !== 1; card.style.display = card.hidden ? 'none' : ''; });
     paymentSection.querySelector('.pay-grid').style.gridTemplateColumns = 'minmax(0, 1fr)';
@@ -135,6 +148,14 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remov
     note.className = 'notice';
     note.textContent = 'Opening this page does not confirm a payment or a booking. Keep your payment reference. Service availability and the care plan still need confirmation.';
     paymentSection.querySelector('.wrap').appendChild(note);
+    var ck = null; try{ ck = sessionStorage.getItem('kw-checkout'); sessionStorage.removeItem('kw-checkout'); }catch(e){}
+    if(ck){
+      var cn = document.createElement('p');
+      cn.className = 'notice';
+      cn.setAttribute('role','status');
+      cn.textContent = ck === 'sent' ? 'Checkout details received. Please complete your payment below.' : 'We could not save your checkout details just now, but you can still pay below. Please WhatsApp or call us your name and phone number after paying.';
+      heading.appendChild(cn);
+    }
   }
   var serviceSel = document.getElementById('f-service');
   var paySel = document.getElementById('f-pay');
@@ -148,15 +169,18 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remov
     var query = unsure || paySel.value === 'Pay later';
     paySel.closest('.fld').hidden = unsure;
     ['f-name','f-phone','f-email','f-msg'].forEach(function(id){
-      document.getElementById(id).closest('.fld').hidden = !query;
+      document.getElementById(id).closest('.fld').hidden = false;
     });
+    var ml = document.querySelector('label[for="f-msg"]');
+    ml.innerHTML = query ? 'Message <span>*</span>' : 'Patient note (optional)';
+    msg.placeholder = query ? 'Tell us about the patient and the care needed - illness, age, type of care, preferred timings...' : 'Patient name, age, condition, address or any special needs (optional)';
     ['upi','crypto','later'].forEach(function(k){
       var p = document.getElementById('pay-panel-' + k); if(p) p.hidden = true;
     });
     var button = document.getElementById('send-btn');
     button.textContent = query ? 'Send Enquiry' : 'Continue to Payment';
-    document.getElementById('route-note').textContent = unsure ? 'Not sure which care is right? Share your needs and we will help you choose. Your enquiry goes to KunalWorld.' : query ? 'Your service details and contact information will be sent to KunalWorld. Payment can be arranged later.' : 'Ready to pay? Continue to your selected payment page. No enquiry email will be sent.';
-    var auto = unsure ? 'Please help me choose the right care service. ' : service ? 'I would like to avail ' + service + ' (' + rates[service] + '). ' : '';
+    document.getElementById('route-note').textContent = unsure ? 'Not sure which care is right? Share your needs and we will help you choose. Your enquiry goes to KunalWorld.' : query ? 'Your service details and contact information will be sent to KunalWorld. Payment can be arranged later.' : 'Checkout details: enter your contact details, then continue to payment. Your details are sent to KunalWorld so we can confirm your care plan.';
+    var auto = !query ? '' : unsure ? 'Please help me choose the right care service. ' : service ? 'I would like to avail ' + service + ' (' + rates[service] + '). ' : '';
     if(!msg.value.trim() || msg.value === lastAutoMessage) { msg.value = auto; lastAutoMessage = auto; }
     document.getElementById('e-service').style.display='none';
     document.getElementById('e-pay').style.display='none';
