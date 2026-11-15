@@ -37,19 +37,100 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 8h8M12 8v9M9.5 12h5"/></svg>
           Crypto Payment (USDT stablecoin)
         </span>
-        <p>Families living abroad or outside Punjab can pay securely in USDT, a dollar-pegged stablecoin (minimum about 10 USDT). Approximate USDT equivalents of our rates:</p>
-        <ul style="font-size:.85rem;margin:0 0 6px;padding-left:18px">
-          <li>&#8377;40,000 / month - approx 425 USDT</li>
-          <li>&#8377;35,000 / month - approx 372 USDT</li>
-          <li>&#8377;22,000 / month - approx 234 USDT</li>
-          <li>&#8377;1,000 / visit or day - approx 11 USDT</li>
-        </ul>
-        <a class="btn" href="https://nowpayments.io/donation/kunalworld" target="_blank" rel="noopener" style="margin:14px 0 16px">Pay with Crypto &#8594;</a>
-        <p style="font-size:.85rem">Secure crypto checkout. Enter the USDT amount for your care plan on the next page. USDT amounts are approximate (1 USDT is about &#8377;94); pay only the amount agreed for your care plan.</p>
+        <p>Calculate your care plan in USDT using the latest available INR rate, including a 2% conversion fee.</p>
+        <div id="crypto-quote">
+          <label for="crypto-plan">Care plan</label>
+          <select id="crypto-plan">
+            <option value="">Choose your care plan</option>
+            <option value="bed">Bed-ridden Patient Care - ₹40,000 / month</option>
+            <option value="trach">Tracheostomy Care - ₹35,000 / month</option>
+            <option value="colostomy">Colostomy Bag Change - ₹1,000 / visit</option>
+            <option value="basic-month">Basic Patient Care - ₹22,000 / month</option>
+            <option value="basic-day">Basic Patient Care - ₹1,000 / day</option>
+          </select>
+          <p id="crypto-rate" role="status" aria-live="polite">Getting live INR / USDT rate...</p>
+          <button class="copy-btn" id="refresh-rate" type="button">Refresh rate</button>
+          <div id="crypto-breakdown" hidden aria-live="polite">
+            <dl><div><dt>Care plan</dt><dd id="quote-base"></dd></div><div><dt>Conversion fee (2%)</dt><dd id="quote-fee"></dd></div></dl>
+            <p style="margin-bottom:4px">Total including 2% fee</p>
+            <div class="crypto-total"><strong><span id="crypto-amount"></span> <small>USDT</small></strong><button class="copy-btn" type="button" id="copy-crypto">Copy amount</button></div>
+            <p id="quote-inr"></p>
+          </div>
+          <p id="crypto-feedback" role="status" aria-live="polite"></p>
+        </div>
+        <p>Copy the total above, open checkout, and paste it into the <strong>USDT</strong> amount field. This checkout does not support automatic amount entry. Choose USDT on the correct network, not another stablecoin.</p>
+        <a class="btn" id="crypto-checkout" href="https://nowpayments.io/donation/kunalworld" target="_blank" rel="noopener" style="margin:14px 0 16px">Open crypto checkout &#8594;</a>
+        <p style="font-size:.85rem">Confirm your care plan before paying. The 2% conversion fee is included above; any checkout or blockchain network charges are separate. Check the final amount and network before sending. Checkout minimums vary by network. Payment does not confirm a booking.</p>
+        <noscript><p>JavaScript is needed for live conversion. Please contact KunalWorld to confirm the USDT total including the 2% fee before paying.</p></noscript>
       </div>
     </div>
   </div>
 </section><section class="soft"><div class="wrap faq"><div class="sec-head"><div class="tag">Common questions</div><h2>Before you arrange care</h2></div><details><summary>Where is care available?</summary><p>KunalWorld serves Jalandhar and nearby areas of Punjab. Share your location to confirm availability.</p></details><details><summary>How are the charges decided?</summary><p>Charges depend on the patient's condition and the duration of care. Send a query to discuss your needs and receive a quote.</p></details><details><summary>How can my family pay?</summary><p>UPI and crypto payment in USDT (a dollar-pegged stablecoin) are available on the <a href="pricing.html#payment">Pricing page</a>. Confirm your care plan and charges before paying.</p></details></div></section></main><footer><div class="wrap"><a class="brand" href="index.html">
       <svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0d9488"/><path d="M32 16v32M16 32h32" stroke="white" stroke-width="9" stroke-linecap="round"/></svg>
       <span>Kunal<em>World</em></span>
-    </a><nav class="footer-links" aria-label="Footer navigation"><a href="index.html">Home</a><a href="services.html">Services</a><a href="pricing.html">Pricing</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav><p>Home Nursing Care &middot; Jalandhar, Punjab &middot; &copy; 2026 KunalWorld</p></div></footer></body></html>
+    </a><nav class="footer-links" aria-label="Footer navigation"><a href="index.html">Home</a><a href="services.html">Services</a><a href="pricing.html">Pricing</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav><p>Home Nursing Care &middot; Jalandhar, Punjab &middot; &copy; 2026 KunalWorld</p></div></footer><style>
+#crypto-quote{background:#f0fdfa;border:1px solid #99e3d6;border-radius:14px;padding:20px;margin:18px 0}#crypto-quote label{display:block;font-weight:700;margin-bottom:8px}#crypto-plan{width:100%;max-width:100%;font:inherit;font-size:.9rem;padding:12px 8px;border:1px solid #accac5;border-radius:8px;background:white;color:#12332e}#crypto-rate,#quote-inr,#crypto-feedback{font-size:.8rem;line-height:1.6;overflow-wrap:anywhere}#crypto-breakdown{border-top:1px solid #beddd7;margin-top:16px;padding-top:12px}#crypto-breakdown dl{font-size:.85rem;margin:0}#crypto-breakdown dl div{display:flex;justify-content:space-between;gap:14px;margin:8px 0}#crypto-breakdown dd{margin:0;text-align:right}.crypto-total{display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between}.crypto-total strong{font-size:2rem;color:#087f72;overflow-wrap:anywhere}.crypto-total small{font-size:1rem}#crypto-checkout[aria-disabled="true"]{opacity:.55;cursor:not-allowed}#crypto-feedback:empty{display:none}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var plan=document.getElementById('crypto-plan'); if(!plan)return;
+  var params=new URLSearchParams(location.search),method=params.get('method'),service=params.get('service');
+  var plans={bed:[40000,'month'],trach:[35000,'month'],colostomy:[1000,'visit'],'basic-month':[22000,'month'],'basic-day':[1000,'day']};
+  var servicePlans={'Bed-ridden Patient Care':'bed','Tracheostomy Care':'trach','Colostomy Bag Change':'colostomy','Basic Patient Care':'basic-month'};
+  if(method==='Crypto'&&servicePlans[service]){
+    plan.value=servicePlans[service];
+    document.querySelector('#payment .sec-head p').textContent=service+'. Your live USDT total, including a 2% conversion fee, is calculated below. No enquiry has been sent.';
+  }
+  if(method==='UPI')return;
+  var rateEl=document.getElementById('crypto-rate'),refresh=document.getElementById('refresh-rate'),link=document.getElementById('crypto-checkout'),copy=document.getElementById('copy-crypto'),feedback=document.getElementById('crypto-feedback');
+  var quote=null,busy=false,lastAttempt=0,totalText='';
+  var key='kunalworld-usdt-inr-v1',maxAge=5*60*1000;
+  function stamp(ts){return new Date(ts).toLocaleString('en-IN',{timeZone:'Asia/Kolkata',hour12:true})+' IST';}
+  function live(){return quote&&quote.source==='CoinGecko USDT / INR'&&Date.now()-quote.at<=maxAge&&quote.at<=Date.now()+60000;}
+  function render(){
+    var fresh=live();
+    rateEl.textContent=quote?(fresh?'Live rate':'Approximate / offline rate')+': 1 USDT = ₹'+quote.rate.toFixed(4)+'. '+quote.source+'. Updated '+stamp(quote.at)+'. '+(fresh?'Quote valid for 5 minutes from this update.':'Live rate unavailable or expired. Refresh before paying.'): 'Live rate unavailable. Refresh before paying.';
+    var p=plans[plan.value];
+    document.getElementById('crypto-breakdown').hidden=!p;
+    totalText='';
+    if(p&&quote){
+      var base=p[0]/quote.rate,fee=base*.02,total=Math.ceil((base+fee)*100-1e-8)/100;
+      totalText=total.toFixed(2);
+      document.getElementById('quote-base').textContent=base.toFixed(4)+' USDT';
+      document.getElementById('quote-fee').textContent=fee.toFixed(4)+' USDT';
+      document.getElementById('crypto-amount').textContent=totalText;
+      document.getElementById('quote-inr').textContent='₹'+p[0].toLocaleString('en-IN')+' + ₹'+(p[0]*.02).toLocaleString('en-IN')+' fee = ₹'+(p[0]*1.02).toLocaleString('en-IN')+' / '+p[1]+'. Total rounded up to 0.01 USDT.';
+    }
+    link.setAttribute('aria-disabled',String(!p||!fresh));
+    copy.disabled=!p||!fresh;
+  }
+  try{var cached=JSON.parse(localStorage.getItem(key));if(cached&&Number.isFinite(cached.rate)&&cached.rate>0&&Number.isFinite(cached.at)&&cached.at<=Date.now()+60000)quote=cached;}catch(e){}
+  if(!quote)quote={rate:94.22,at:1794766971000,source:'Reference rate (not a payment quote)'};
+  async function updateRate(){
+    if(busy)return;
+    if(Date.now()-lastAttempt<60000){feedback.textContent='Please wait a minute before refreshing again.';return;}
+    lastAttempt=Date.now();busy=true;refresh.disabled=true;refresh.textContent='Updating...';feedback.textContent='';
+    var controller=new AbortController(),timer=setTimeout(function(){controller.abort();},10000);
+    try{
+      var r=await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=inr&include_last_updated_at=true',{signal:controller.signal,cache:'no-store'});
+      if(!r.ok)throw Error('rate');
+      var data=await r.json(),t=data.tether;
+      if(!t||!Number.isFinite(t.inr)||t.inr<=0||!Number.isFinite(t.last_updated_at))throw Error('rate');
+      var at=t.last_updated_at*1000;
+      if(Date.now()-at>maxAge||at>Date.now()+60000)throw Error('stale');
+      quote={rate:t.inr,at:at,source:'CoinGecko USDT / INR'};
+      try{localStorage.setItem(key,JSON.stringify(quote));}catch(e){}
+    }catch(e){feedback.textContent='Could not refresh the live rate. Any shown estimate is not a confirmed quote. Checkout and copying are paused once the rate expires. Try again in a minute, or use UPI.';}
+    finally{clearTimeout(timer);busy=false;refresh.disabled=false;refresh.textContent='Refresh rate';render();}
+  }
+  plan.addEventListener('change',function(){feedback.textContent='';render();});
+  refresh.addEventListener('click',updateRate);
+  copy.addEventListener('click',async function(){
+    render();if(!totalText||!live())return;
+    try{await navigator.clipboard.writeText(totalText);feedback.textContent='Copied '+totalText+' USDT. Paste into the USDT amount field on checkout.';}catch(e){feedback.textContent='Copy unavailable. Select and copy the total above manually.';}
+  });
+  link.addEventListener('click',function(e){render();if(!plans[plan.value]||!live()){e.preventDefault();feedback.textContent=!plans[plan.value]?'Choose your care plan first.':'Your rate has expired. Refresh the rate before opening checkout.';}});
+  render();updateRate();setInterval(render,30000);
+});
+</script>
+</body></html>
