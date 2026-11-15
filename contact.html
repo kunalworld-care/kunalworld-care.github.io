@@ -9,14 +9,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css"><script src="app.js" defer></script></head><body><a class="skip" href="#main">Skip to content</a><header><div class="wrap nav"><a class="brand" href="index.html">
+<link rel="stylesheet" href="styles.css"><script src="app.js?v=pay-or-query-1" defer></script></head><body><a class="skip" href="#main">Skip to content</a><header><div class="wrap nav"><a class="brand" href="index.html">
       <svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0d9488"/><path d="M32 16v32M16 32h32" stroke="white" stroke-width="9" stroke-linecap="round"/></svg>
       <span>Kunal<em>World</em></span>
-    </a><button class="menu-toggle" id="menu-toggle" aria-controls="primary-nav" aria-expanded="false">Menu</button><nav id="primary-nav" class="nav-links" aria-label="Main navigation"><a href="index.html">Home</a><a href="services.html">Services</a><a href="pricing.html">Pricing</a><a href="about.html">About</a><a href="contact.html" aria-current="page">Contact</a><a class="btn sm" href="contact.html#query-form">Request Care</a></nav></div></header><main id="main"><section class="page-intro"><div class="wrap"><div class="tag">Contact</div><h1>Avail a service, in a few taps.</h1><p>Pick your service and payment method below, and share your care needs with KunalWorld. Let's discuss a plan for your loved one at home.</p></div></section><section class="contact" id="contact">
+    </a><button class="menu-toggle" id="menu-toggle" aria-controls="primary-nav" aria-expanded="false">Menu</button><nav id="primary-nav" class="nav-links" aria-label="Main navigation"><a href="index.html">Home</a><a href="services.html">Services</a><a href="pricing.html">Pricing</a><a href="about.html">About</a><a href="contact.html" aria-current="page">Contact</a><a class="btn sm" href="contact.html#query-form">Request Care</a></nav></div></header><main id="main"><section class="page-intro"><div class="wrap"><div class="tag">Contact</div><h1>Avail a service, in a few taps.</h1><p>Choose a service, then pay directly or send an enquiry if you need advice or want to pay later.</p></div></section><section class="contact" id="contact">
   <div class="wrap contact-flex">
     <div class="contact-info">
       <h2>Request home care</h2>
-      <p>Choose the service you need, pick a payment method, and tell us about the patient. We will get back to you as soon as possible to discuss timings, care plan and charges.</p>
+      <p>Ready to pay? Choose UPI or crypto to continue to payment without sending an enquiry. Not sure, or paying later? Send us your care needs and service details instead.</p>
       <ul>
         <li><svg viewBox="0 0 24 24"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>Jalandhar, Punjab, India</li>
         <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Quick response to every query</li>
@@ -24,22 +24,6 @@
       </ul>
     </div>
     <form id="query-form" novalidate>
-      <div class="fld">
-        <label for="f-name">Your Name <span>*</span></label>
-        <input type="text" id="f-name" name="name" placeholder="Full name" autocomplete="name">
-        <div class="err" id="e-name">Please enter your name.</div>
-      </div>
-      <div class="fld">
-        <label for="f-phone">Phone Number <span>*</span></label>
-        <input type="tel" id="f-phone" name="phone" placeholder="10-digit mobile number" autocomplete="tel">
-        <div class="hint">Indian mobile number, e.g. 98765 43210</div>
-        <div class="err" id="e-phone">Please enter a valid 10-digit Indian mobile number.</div>
-      </div>
-      <div class="fld">
-        <label for="f-email">Email Address <span>*</span></label>
-        <input type="email" id="f-email" name="email" placeholder="you@example.com" autocomplete="email">
-        <div class="err" id="e-email">Please enter a valid email address.</div>
-      </div>
       <div class="fld">
         <label for="f-service">Select Service <span>*</span></label>
         <select id="f-service" name="service">
@@ -62,25 +46,22 @@
         </select>
         <div class="err" id="e-pay">Please choose a payment method.</div>
       </div>
-      <div class="pay-panel" id="pay-panel-upi" hidden>
-        <div class="pp-head">Pay by UPI</div>
-        <p>Scan with any UPI app (GPay, PhonePe, Paytm) or pay directly to our UPI ID. Please mention the patient's name in the payment note.</p>
-        <img class="qr-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHp0lEQVR4nO3cwW1jNxhG0ThwAekjbaTstJE+0oGyHSABMQgv/fPJ52wH1pMlzwUXH/jxer1+Aej8Ov0GgHcjK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjnzg//9vsf1fu4xN9//bn4153fd/3KO9bvauo3Oveudj7JqVd+op1Pw2kFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYhtrWzXzu1Kd0wtZe987rkN7trOK9+5db7zuWvnvl+nFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgdnBlu3Zu4XfnonFt6l7YOze4U5/G2tRtxDum/i84rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsbGV7ROd22jeuVi9c5O688pT38J347QCxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsSsbL/Izg2s5155anV67j7acxtcfp7TChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQG1vZfrdF45171rVz7/ncjvbO/e7a+/1fcFoBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWIHV7bnlqN3unP9+cSffT/f7f+C0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEPt4vV7T7+Exzi1Hz90Le865De6Oqft3+ZHTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQ21rZTt1Xeue+c+3O9eedn8baExe655z7JHde2WkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYgdXNnumNqkPnF1uuY3+ho7f1fvdwuy0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKENta2e64cyl7bnd4ztTWee3cfcN33oM7ZeqTXHNaAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFin1MPfr/7O8+Z+n13Npo7z51ajp577nf7i3VaAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFiWyvbqVtUdxaNU7d7Tj33TlO31d65o30/TitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQGxrZTu1WTx3X+kTnfskp+4bPveX88T7aJ94D67TChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQO3iX7Z1bWHeO/ujOJfTUd3TnDbtTz93htALEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxD5er9ehl55a+O2YWp1OfVZTe9Y7N7h3fkc7rGyBNyErQExWgJisADFZAWKyAsRkBYjJChCTFSB2cGW747vdOPvEjeadpm5+fb+98s4rO60AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGtle2dq8Qn3pO644n7zil33hn8xE9yzWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYgdXNnueOK9od7Vj554p+yd98LumHpXTitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOxz+g38t3M7yyduNJ/o3L5z6rO687nrT/Lc/5Q1pxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVILa1sr1z7bq288rnVonnbhW98xbVKXf+xd75177DaQWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiG2tbO/c0a7due594g27U7eoTv3s2tRzz73yDqcVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSD28Xq9Rh58512n50ztaO9c905tQ6fWrjvuXGCvOa0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALE3XNlObTR3TN05usNNxl/zyueea2ULPIasADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY1sr2zns01+7cd+44t3Z9v03qE03dsLvzXKcVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSA2dpftE925/nzijnaH3+h+TitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOxz54fvXJ3u2Fk0nlu77rjzPtqpu2zPPffc9zv1aexwWgFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYlsr27U77+Ccus10ame5fu4Tb35du3PNfM7UXnnNaQWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiB1c2a498YbO91vo3rmFvdPUe37i/cpOK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitAbGxl+0Q7m8WdReP7rXvPObcrPfct7Pzl7Dz33MbaaQWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiFnZZr7bRnPH1H3D576jtSfe3bvDaQWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiI2tbM/tLKfceXvr2p0L3alF8o73+3ve4bQCxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsQ+Xq/X//7h97uhc2qjuWPnPd/5+3pXP+/cmnnnlZ1WgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY1soW4N+cVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWL/AE51AYfZ5PFAAAAAAElFTkSuQmCC" alt="Scan to pay KunalWorld by UPI" width="150" height="150" style="width:150px;height:150px;margin:12px auto 6px">
-        <div class="upi-row">
-          <div class="upi-id" id="upi-id-form">mr.kumar.1062@superyes</div>
-          <button class="copy-btn" type="button" id="copy-upi-form">Copy</button>
-        </div>
-        <p class="pp-note">You can pay now, or after we confirm your care plan - send the query and we will guide you.</p>
+      <p class="notice" id="route-note" aria-live="polite"></p>
+      <div class="fld">
+        <label for="f-name">Your Name <span>*</span></label>
+        <input type="text" id="f-name" name="name" placeholder="Full name" autocomplete="name">
+        <div class="err" id="e-name">Please enter your name.</div>
       </div>
-      <div class="pay-panel" id="pay-panel-crypto" hidden>
-        <div class="pp-head">Pay with Crypto</div>
-        <p>Secure checkout by NOWPayments - any amount, USDT and 300+ coins supported (minimum about 10 USDT). Ideal for families abroad.</p>
-        <a class="btn" href="https://nowpayments.io/donation/kunalworld" target="_blank" rel="noopener" style="margin:10px 0 12px">Pay with Crypto &#8594;</a>
-        <p class="pp-note">Send your query first so we can confirm the care plan; pay before or after confirmation.</p>
+      <div class="fld">
+        <label for="f-phone">Phone Number <span>*</span></label>
+        <input type="tel" id="f-phone" name="phone" placeholder="10-digit mobile number" autocomplete="tel">
+        <div class="hint">Indian mobile number, e.g. 98765 43210</div>
+        <div class="err" id="e-phone">Please enter a valid 10-digit Indian mobile number.</div>
       </div>
-      <div class="pay-panel" id="pay-panel-later" hidden>
-        <div class="pp-head">Pay later</div>
-        <p>No advance payment needed. Send your query, we will discuss the care plan and charges, and you pay after the visit or once the plan is confirmed - by UPI or crypto.</p>
+      <div class="fld">
+        <label for="f-email">Email Address <span>*</span></label>
+        <input type="email" id="f-email" name="email" placeholder="you@example.com" autocomplete="email">
+        <div class="err" id="e-email">Please enter a valid email address.</div>
       </div>
       <div class="fld">
         <label for="f-msg">Message <span>*</span></label>
@@ -88,7 +69,7 @@
         <div class="err" id="e-msg">Please write a short message.</div>
       </div>
       <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
-      <button type="submit" class="btn" id="send-btn" style="width:100%">Send Query</button>
+      <button type="submit" class="btn" id="send-btn" style="width:100%">Continue to Payment</button>
       <div id="form-status" role="status"></div>
     </form>
   </div>
