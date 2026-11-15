@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded',function(){
     var fresh=live();
     rateEl.textContent=quote?(fresh?'Live rate':'Approximate / offline rate')+': 1 USDT = ₹'+quote.rate.toFixed(4)+'. '+quote.source+'. Updated '+stamp(quote.at)+'. '+(fresh?'Quote valid for 5 minutes from this update.':'Live rate unavailable or expired. Refresh before paying.'): 'Live rate unavailable. Refresh before paying.';
     var p=plans[plan.value];
+    if(method==='Crypto')document.querySelector('#payment .sec-head p').textContent=(p?plan.options[plan.selectedIndex].text+'. ':'Choose your care plan below. ')+'Your USDT total includes a 2% conversion fee. No enquiry has been sent.';
     document.getElementById('crypto-breakdown').hidden=!p;
     totalText='';
     if(p&&quote){
