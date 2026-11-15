@@ -14,13 +14,19 @@
   }
   function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
 
-  var copyBtn = document.getElementById('copy-upi');
-  if(copyBtn){ copyBtn.addEventListener('click', function(){
-    var id = document.getElementById('upi-id').textContent.trim();
-    function done(){ copyBtn.textContent='Copied!'; setTimeout(function(){ copyBtn.textContent='Copy'; },1800); }
-    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(id).then(done).catch(function(){ fallback(); }); } else { fallback(); }
+  function wireCopy(btnId, idId){
+    var b = document.getElementById(btnId);
+    var t = document.getElementById(idId);
+    if(!b || !t) return;
+    b.addEventListener('click', function(){
+    var id = t.textContent.trim();
     function fallback(){ var t=document.createElement('textarea'); t.value=id; document.body.appendChild(t); t.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(t); done(); }
-  }); }
+    function done(){ b.textContent='Copied!'; setTimeout(function(){ b.textContent='Copy'; },1800); }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(id).then(done).catch(function(){ fallback(); }); } else { fallback(); }
+    });
+  }
+  wireCopy('copy-upi','upi-id');
+  wireCopy('copy-upi-form','upi-id-form');
 
   if(form) form.addEventListener('submit', function(e){
     e.preventDefault();
@@ -29,10 +35,17 @@
     var email = document.getElementById('f-email').value.trim();
     var msg = document.getElementById('f-msg').value.trim();
 
+    var serviceEl = document.getElementById('f-service');
+    var payEl = document.getElementById('f-pay');
+    var service = serviceEl ? serviceEl.value : '';
+    var pay = payEl ? payEl.value : '';
+
     var ok = true;
     show('e-name', name.length >= 2 ? false : (ok=false, true));
     show('e-phone', validPhone(phone) ? false : (ok=false, true));
     show('e-email', validEmail(email) ? false : (ok=false, true));
+    if(serviceEl) show('e-service', service ? false : (ok=false, true));
+    if(payEl) show('e-pay', pay ? false : (ok=false, true));
     show('e-msg', msg.length >= 5 ? false : (ok=false, true));
     if(!ok){ status.className=''; status.style.display='none'; return; }
 
@@ -42,11 +55,13 @@
 
     var data = new FormData();
     data.append('access_key', 'a63c67d4-cf97-4882-9a62-556cdfa590b0');
-    data.append('subject', 'New care query - KunalWorld website');
     data.append('from_name', 'KunalWorld Website');
     data.append('name', name);
     data.append('phone', phone);
     data.append('email', email);
+    if(service) data.append('service_requested', service);
+    if(pay) data.append('payment_method', pay);
+    data.append('subject', 'New service request - ' + (service || 'KunalWorld website'));
     data.append('message', msg);
 
     fetch('https://api.web3forms.com/submit', { method:'POST', body:data })
@@ -75,5 +90,55 @@
 const menu=document.getElementById('menu-toggle'), nav=document.getElementById('primary-nav');
 menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',open);nav.classList.toggle('open',open);menu.textContent=open?'Close':'Menu';});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.textContent='Menu';}});
-const selected=new URLSearchParams(location.search).get('service');
-const msg=document.getElementById('f-msg');if(msg&&selected)msg.value='I would like to enquire about '+selected+'. ';
+(function(){
+  var serviceSel = document.getElementById('f-service');
+  var paySel = document.getElementById('f-pay');
+  var msg = document.getElementById('f-msg');
+  if(!serviceSel && !paySel) return;
+
+  var rates = {
+    'Bed-ridden Patient Care':'\u20b940,000 / month',
+    'Tracheostomy Care':'\u20b935,000 / month',
+    'Colostomy Bag Change':'\u20b91,000 / visit',
+    'Basic Patient Care':'\u20b922,000 / month or \u20b91,000 / day'
+  };
+
+  function showPanel(name){
+    ['upi','crypto','later'].forEach(function(k){
+      var p = document.getElementById('pay-panel-' + k);
+      if(p) p.hidden = (k !== name);
+    });
+  }
+
+  if(paySel){
+    paySel.addEventListener('change', function(){
+      var v = paySel.value;
+      if(v === 'UPI') showPanel('upi');
+      else if(v === 'Crypto') showPanel('crypto');
+      else if(v === 'Pay later') showPanel('later');
+      else showPanel('');
+      var ep = document.getElementById('e-pay'); if(ep) ep.style.display='none';
+    });
+  }
+
+  if(serviceSel){
+    serviceSel.addEventListener('change', function(){
+      var v = serviceSel.value;
+      var es = document.getElementById('e-service'); if(es) es.style.display='none';
+      if(v && msg && (msg.value.trim()==='' || msg.value.indexOf('I would like to enquire about')===0)){
+        msg.value = 'I would like to avail ' + v + (rates[v] ? ' (' + rates[v] + ')' : '') + '. ';
+      }
+    });
+    var wanted = new URLSearchParams(location.search).get('service');
+    if(wanted){
+      for(var i=0;i<serviceSel.options.length;i++){
+        if(serviceSel.options[i].value.toLowerCase() === wanted.toLowerCase()){
+          serviceSel.selectedIndex = i;
+          serviceSel.dispatchEvent(new Event('change'));
+          break;
+        }
+      }
+      if(serviceSel.value==='' && msg && msg.value.trim()==='') msg.value='I would like to enquire about '+wanted+'. ';
+    }
+  }
+})();
