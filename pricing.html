@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css"><script src="app.js?v=pay-1" defer></script></head><body><a class="skip" href="#main">Skip to content</a><header><div class="wrap nav"><a class="brand" href="index.html">
+<link rel="stylesheet" href="styles.css"><script src="app.js?v=pay-2" defer></script></head><body><a class="skip" href="#main">Skip to content</a><header><div class="wrap nav"><a class="brand" href="index.html">
       <svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0d9488"/><path d="M32 16v32M16 32h32" stroke="white" stroke-width="9" stroke-linecap="round"/></svg>
       <span>Kunalji <em>Nursing Care Service</em></span>
     </a><button class="menu-toggle" id="menu-toggle" aria-controls="primary-nav" aria-expanded="false">Menu</button><nav id="primary-nav" class="nav-links" aria-label="Main navigation"><a href="index.html">Home</a><a href="services.html">Services</a><a href="pricing.html" aria-current="page">Pricing</a><a href="about.html">About</a><a href="contact.html">Contact</a><a class="btn sm" href="contact.html#query-form">Request Care</a></nav></div></header><main id="main"><section class="page-intro"><div class="wrap"><div class="tag">Pricing & payments</div><h1>Care planned around your needs.</h1><p>Explore our care rates below. Once your care plan and charges are agreed, use the payment options on this page.</p></div></section><section><div class="wrap"><div class="grid"><article class="card"><h2>Bed-ridden Patient Care</h2><p>Daily bedside support, hygiene and comfort.</p><div class="price">₹40,000</div><div class="price-note">per month</div><a class="btn" href="contact.html?service=Bed-ridden%20Patient%20Care#query-form">Request Care</a></article><article class="card"><h2>Tracheostomy Care</h2><p>Suctioning, stoma care and monitoring.</p><div class="price">₹35,000</div><div class="price-note">per month</div><a class="btn" href="contact.html?service=Tracheostomy%20Care#query-form">Request Care</a></article><article class="card"><h2>Colostomy Bag Change</h2><p>Bag changes and gentle skin care.</p><div class="price">₹1,000</div><div class="price-note">per visit</div><a class="btn" href="contact.html?service=Colostomy%20Bag%20Change#query-form">Request Care</a></article><article class="card"><h2>Basic Patient Care</h2><p>Everyday support for elderly or recovering patients.</p><div class="price">₹22,000</div><div class="price-note">per month or ₹1,000 per day</div><a class="btn" href="contact.html?service=Basic%20Patient%20Care#query-form">Request Care</a></article></div><p class="notice">Exact pricing depends on the patient's condition and duration of care. Please confirm the care plan and charges before making a payment.</p></div></section><section id="payment">
@@ -58,8 +58,8 @@
           </div>
           <p id="crypto-feedback" role="status" aria-live="polite"></p>
         </div>
-        <p>Copy the total above, open checkout, and paste it into the <strong>USDT</strong> amount field. This checkout does not support automatic amount entry. Choose USDT on the correct network, not another stablecoin.</p>
-        <a class="btn" id="crypto-checkout" href="https://nowpayments.io/donation/kunalworld" target="_blank" rel="noopener" style="margin:14px 0 16px">Open crypto checkout &#8594;</a>
+        <p>Tap below to open a secure NOWPayments checkout for exactly this USDT total - no amount entry needed. On the payment page, choose USDT on the correct network, not another stablecoin. The gateway confirms your payment to us automatically.</p>
+        <button class="btn" id="crypto-checkout" type="button" style="margin:14px 0 16px">Proceed to secure crypto checkout &#8594;</button>
         <p style="font-size:.85rem">Confirm your care plan before paying. The 2% conversion fee is included above; any checkout or blockchain network charges are separate. Check the final amount and network before sending. Checkout minimums vary by network. Payment does not confirm a booking.</p>
         <noscript><p>JavaScript is needed for live conversion. Please contact Kunalji Nursing Care Service to confirm the USDT total including the 2% fee before paying.</p></noscript>
       </div>
@@ -76,6 +76,32 @@
 document.addEventListener('DOMContentLoaded',function(){
   var plan=document.getElementById('crypto-plan'); if(!plan)return;
   var params=new URLSearchParams(location.search),method=params.get('method'),service=params.get('service');
+  // Return from the NOWPayments hosted checkout (success / cancel).
+  var paid=params.get('paid'),cancelled=params.get('cancelled'),refParam=params.get('ref');
+  if(paid==='crypto'){
+    var secOk=document.getElementById('payment');
+    if(secOk){
+      var done=document.createElement('div');
+      done.className='notice';
+      done.setAttribute('role','status');
+      done.textContent='Your payment was received by the payment gateway.'+(refParam?' Reference: '+refParam.replace(/[^A-Za-z0-9-]/g,'')+'.':'')+' Our team is confirming your payment and will reach back to you soon to confirm your care plan.';
+      var w=secOk.querySelector('.wrap');
+      w.insertBefore(done,w.firstChild);
+    }
+    try{
+      var pc=JSON.parse(localStorage.getItem('kw-pending-checkout'));
+      if(pc&&(!refParam||pc.ref===refParam))localStorage.removeItem('kw-pending-checkout');
+    }catch(e){}
+  }
+  if(cancelled==='1'){
+    var secC=document.getElementById('payment');
+    if(secC){
+      var cn=document.createElement('p');
+      cn.className='notice';
+      cn.textContent='The payment page was closed before paying. Your details are still saved on this device - you can continue below whenever you are ready.';
+      secC.querySelector('.wrap').appendChild(cn);
+    }
+  }
   var plans={bed:[40000,'month'],trach:[35000,'month'],colostomy:[1000,'visit'],'basic-month':[22000,'month'],'basic-day':[1000,'day']};
   var servicePlans={'Bed-ridden Patient Care':'bed','Tracheostomy Care':'trach','Colostomy Bag Change':'colostomy','Basic Patient Care':'basic-month'};
   if(method==='Crypto'&&servicePlans[service]){
@@ -129,9 +155,61 @@ document.addEventListener('DOMContentLoaded',function(){
   refresh.addEventListener('click',updateRate);
   copy.addEventListener('click',async function(){
     render();if(!totalText||!live())return;
-    try{await navigator.clipboard.writeText(totalText);feedback.textContent='Copied '+totalText+' USDT. Paste into the USDT amount field on checkout.';}catch(e){feedback.textContent='Copy unavailable. Select and copy the total above manually.';}
+    try{await navigator.clipboard.writeText(totalText);feedback.textContent='Copied '+totalText+' USDT for your records.';}catch(e){feedback.textContent='Copy unavailable. Select and copy the total above manually.';}
   });
-  link.addEventListener('click',function(e){render();if(!plans[plan.value]||!live()){e.preventDefault();feedback.textContent=!plans[plan.value]?'Choose your care plan first.':'Your rate has expired. Refresh the rate before opening checkout.';}});
+  link.addEventListener('click',function(e){
+    e.preventDefault();
+    render();
+    if(!plans[plan.value]){feedback.textContent='Choose your care plan first.';return;}
+    if(!live()){feedback.textContent='Your rate has expired. Refresh the rate before checkout.';return;}
+    var pending=null;
+    try{pending=JSON.parse(localStorage.getItem('kw-pending-checkout'));}catch(e){}
+    if(!pending||pending.pay!=='Crypto'||!pending.name){
+      feedback.textContent='Please start from the checkout form on the Contact page so we can match your payment to your booking.';
+      return;
+    }
+    if(!pending.ref){
+      pending.ref='KW-'+Date.now().toString(36).toUpperCase()+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+    }
+    var p=plans[plan.value];
+    var base=p[0]/quote.rate,fee=base*.02,total=Math.ceil((base+fee)*100-1e-8)/100;
+    link.disabled=true;link.setAttribute('aria-disabled','true');link.textContent='Preparing secure checkout...';feedback.textContent='';
+    // 1) tell the team the payment has started (same reference as the gateway confirmation)
+    var d=new FormData();
+    d.append('access_key','a63c67d4-cf97-4882-9a62-556cdfa590b0');
+    d.append('from_name','Kunalji Nursing Care Service Website');
+    d.append('name',pending.name);
+    d.append('phone',pending.phone);
+    d.append('email',pending.email);
+    d.append('service_requested',pending.service);
+    d.append('payment_method','Crypto');
+    d.append('service_details',pending.serviceText||pending.service);
+    d.append('reference',pending.ref);
+    d.append('amount_usdt',total.toFixed(2));
+    d.append('subject','New checkout - '+pending.service+' (Crypto)');
+    d.append('message','CHECKOUT FORM - customer started a crypto payment.\nReference: '+pending.ref+'\nAmount: '+total.toFixed(2)+' USDT (including 2% conversion fee)\nCrypto payment STARTED - waiting for gateway auto-confirmation. You will receive a separate "Crypto payment CONFIRMED - ref '+pending.ref+'" email when the money arrives. Do not confirm the care plan before that email.\nPatient note: '+(pending.msg||'(none)'));
+    var notified=fetch('https://api.web3forms.com/submit',{method:'POST',body:d}).then(function(r){return r.json();}).then(function(res){return !!(res&&res.success);}).catch(function(){return false;});
+    // 2) create a fixed-amount invoice through our server (the NOWPayments key never reaches the browser)
+    var invoiced=fetch('https://kunalji-pay.dx1qne.workers.dev/create-invoice',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','X-KW-Client':'kwc-9f3a7c2e51b84d06'},
+      body:JSON.stringify({order_id:pending.ref,amount_usdt:total,service:pending.service,description:(pending.name+' '+pending.phone).slice(0,110)})
+    }).then(function(r){return r.json();}).then(function(res){return res&&res.invoice_url?res.invoice_url:null;}).catch(function(){return null;});
+    Promise.all([notified,invoiced]).then(function(rs){
+      var invoiceUrl=rs[1];
+      if(!invoiceUrl){
+        link.disabled=false;link.setAttribute('aria-disabled','false');link.textContent='Proceed to secure crypto checkout \u2192';
+        feedback.textContent='Could not open the secure checkout just now. Please try again in a minute, or pay by UPI instead.';
+        return;
+      }
+      try{
+        pending.invoiceStarted=true;
+        pending.amountUsdt=total.toFixed(2);
+        localStorage.setItem('kw-pending-checkout',JSON.stringify(pending));
+      }catch(e){}
+      window.location.href=invoiceUrl;
+    });
+  });
   render();updateRate();setInterval(render,30000);
 });
 </script>
