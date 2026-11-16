@@ -91,7 +91,7 @@ export default {
         order_description: orderDesc,
         ipn_callback_url: 'https://kunalji-pay.dx1qne.workers.dev/ipn',
         success_url: siteOrigin(env) + '/pricing.html?paid=crypto&ref=' + encodeURIComponent(orderId) + '#payment',
-        cancel_url: siteOrigin(env) + '/pricing.html?method=Crypto&cancelled=1#payment'
+        cancel_url: siteOrigin(env) + '/pricing.html?method=Crypto&cancelled=1&ref=' + encodeURIComponent(orderId) + '#payment'
       };
       var r, data;
       try {
