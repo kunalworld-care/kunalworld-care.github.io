@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded',function(){
       var done=document.createElement('div');
       done.className='notice';
       done.setAttribute('role','status');
-      done.textContent='Your payment was received by the payment gateway.'+(refParam?' Reference: '+refParam.replace(/[^A-Za-z0-9-]/g,'')+'.':'')+' Our team is confirming your payment and will reach back to you soon to confirm your care plan.';
+      done.textContent='We have received your payment.'+(refParam?' Reference: '+refParam.replace(/[^A-Za-z0-9-]/g,'')+'.':'')+' Our team will reach out to you soon after getting confirmation from the payment gateway.';
       var w=secOk.querySelector('.wrap');
       w.insertBefore(done,w.firstChild);
     }
