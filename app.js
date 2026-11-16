@@ -121,13 +121,17 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remov
     'Bed-ridden Patient Care':'₹40,000 / month',
     'Tracheostomy Care':'₹35,000 / month',
     'Colostomy Bag Change':'₹1,000 / visit',
-    'Basic Patient Care':'₹22,000 / month or ₹1,000 / day'
+    'Basic Patient Care':'₹22,000 / month or ₹1,000 / day',
+    'Basic Patient Care (Daily)':'₹1,000 / day',
+    'Basic Patient Care (Monthly)':'₹22,000 / month'
   };
   var usdt = {
     'Bed-ridden Patient Care':'approx 425 USDT / month',
     'Tracheostomy Care':'approx 372 USDT / month',
     'Colostomy Bag Change':'approx 11 USDT / visit',
-    'Basic Patient Care':'approx 234 USDT / month or approx 11 USDT / day'
+    'Basic Patient Care':'approx 234 USDT / month or approx 11 USDT / day',
+    'Basic Patient Care (Daily)':'approx 11 USDT / day',
+    'Basic Patient Care (Monthly)':'approx 234 USDT / month'
   };
   var params = new URLSearchParams(location.search);
   var paymentSection = document.getElementById('payment');
