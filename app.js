@@ -77,14 +77,13 @@
     }
     var payUrl = 'pricing.html?service=' + encodeURIComponent(service) + '&method=' + encodeURIComponent(pay) + '#payment';
     if(payRoute){
-      // Never block payment: continue whether or not the email send works.
-      var went = false;
-      var go = function(ok){ if(went) return; went = true; try{ sessionStorage.setItem('kw-checkout', ok ? 'sent' : 'failed'); }catch(e){} location.href = payUrl; };
-      var timer = setTimeout(function(){ go(false); }, 8000);
-      fetch('https://api.web3forms.com/submit', { method:'POST', body:data })
-        .then(function(r){ return r.json(); })
-        .then(function(res){ clearTimeout(timer); go(!!(res && res.success)); })
-        .catch(function(){ clearTimeout(timer); go(false); });
+      // Nothing is emailed yet. Hold the checkout details on this device; the
+      // final step on the payment page (after paying) sends them to the team.
+      var pending = { name:name, phone:phone, email:email, service:service,
+        serviceText: serviceEl.options[serviceEl.selectedIndex].text,
+        pay:pay, msg:msg, ts:Date.now() };
+      try{ localStorage.setItem('kw-pending-checkout', JSON.stringify(pending)); }catch(e){}
+      location.href = payUrl;
       return;
     }
 
@@ -148,13 +147,114 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remov
     note.className = 'notice';
     note.textContent = 'Opening this page does not confirm a payment or a booking. Keep your payment reference. Service availability and the care plan still need confirmation.';
     paymentSection.querySelector('.wrap').appendChild(note);
-    var ck = null; try{ ck = sessionStorage.getItem('kw-checkout'); sessionStorage.removeItem('kw-checkout'); }catch(e){}
-    if(ck){
-      var cn = document.createElement('p');
-      cn.className = 'notice';
-      cn.setAttribute('role','status');
-      cn.textContent = ck === 'sent' ? 'Checkout details received. Please complete your payment below.' : 'We could not save your checkout details just now, but you can still pay below. Please WhatsApp or call us your name and phone number after paying.';
-      heading.appendChild(cn);
+    var pending = null;
+    try{
+      pending = JSON.parse(localStorage.getItem('kw-pending-checkout'));
+      if(!pending || !pending.name || !pending.pay || !pending.service || (pending.ts && Date.now() - pending.ts > 24*60*60*1000)) pending = null;
+    }catch(e){ pending = null; }
+    if(pending && pending.pay !== method) pending = null;
+    var pn = document.createElement('p');
+    pn.className = 'notice';
+    pn.setAttribute('role','status');
+    if(pending){
+      pn.textContent = 'Your checkout details are saved on this device - nothing has been sent yet. Step 1: complete the payment below. Step 2: submit the confirmation at the bottom of the payment card so our team can verify your payment.';
+    } else {
+      pn.textContent = 'Paying for a care plan? Please start from the checkout form on the Contact page so we can match your payment to your booking. ';
+      var pl = document.createElement('a');
+      pl.href = 'contact.html' + (selected ? '?service=' + encodeURIComponent(selected) : '') + '#query-form';
+      pl.textContent = 'Open the checkout form';
+      pn.appendChild(pl);
+    }
+    heading.appendChild(pn);
+
+    if(pending){
+      var firstName = pending.name.split(' ')[0].replace(/[<>&"']/g, '');
+      var step = document.createElement('div');
+      step.className = 'confirm-step';
+      if(method === 'UPI'){
+        step.innerHTML = '<h3>Step 2 - Submit your UTR number after paying</h3>'
+          + '<p>After your UPI payment succeeds, your payment app shows a UTR / UPI reference number (usually 12 digits). Enter it here so our team can confirm your payment.</p>'
+          + '<label for="utr-input">UTR / UPI reference number <span>*</span></label>'
+          + '<input type="text" id="utr-input" inputmode="numeric" autocomplete="off" placeholder="e.g. 612345678901">'
+          + '<div class="err" id="e-utr">Please enter the UTR number shown in your payment app (8-22 letters or digits).</div>'
+          + '<button type="button" class="btn" id="utr-submit">Submit UTR &amp; complete booking request</button>'
+          + '<div class="step-status" id="utr-status" role="status"></div>';
+      } else {
+        step.innerHTML = '<h3>Step 2 - After paying, submit your details</h3>'
+          + '<p>The crypto checkout opens in a new tab. Once your payment is sent, come back to this page and submit below. Our team verifies every payment before confirming your care plan.</p>'
+          + '<label for="txid-input">Transaction ID / payment reference (optional)</label>'
+          + '<input type="text" id="txid-input" autocomplete="off" placeholder="From your wallet or the payment page">'
+          + '<button type="button" class="btn" id="crypto-submit">I have completed my crypto payment - submit details</button>'
+          + '<div class="step-status" id="crypto-status" role="status"></div>';
+      }
+      var activeCard = paymentSection.querySelectorAll('.pay-card')[method === 'UPI' ? 0 : 1];
+      activeCard.appendChild(step);
+
+      function sendCheckout(fieldName, fieldValue, note){
+        var d = new FormData();
+        d.append('access_key', 'a63c67d4-cf97-4882-9a62-556cdfa590b0');
+        d.append('from_name', 'Kunalji Nursing Care Service Website');
+        d.append('name', pending.name);
+        d.append('phone', pending.phone);
+        d.append('email', pending.email);
+        d.append('service_requested', pending.service);
+        d.append('payment_method', pending.pay);
+        d.append('service_details', pending.serviceText || pending.service);
+        d.append(fieldName, fieldValue);
+        d.append('subject', 'New checkout - ' + pending.service + ' (' + pending.pay + ')');
+        d.append('message', note + '\nPatient note: ' + (pending.msg || '(none)'));
+        return fetch('https://api.web3forms.com/submit', { method:'POST', body:d })
+          .then(function(r){ return r.json(); })
+          .then(function(res){ return !!(res && res.success); });
+      }
+      function finishStep(html){
+        try{ localStorage.removeItem('kw-pending-checkout'); }catch(e){}
+        step.innerHTML = html;
+        step.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+
+      if(method === 'UPI'){
+        var utrBtn = document.getElementById('utr-submit');
+        utrBtn.addEventListener('click', function(){
+          var utr = document.getElementById('utr-input').value.trim();
+          var st = document.getElementById('utr-status');
+          var okUtr = /^[0-9A-Za-z]{8,22}$/.test(utr);
+          document.getElementById('e-utr').style.display = okUtr ? 'none' : 'block';
+          if(!okUtr) return;
+          utrBtn.disabled = true; utrBtn.textContent = 'Submitting...';
+          st.className = 'step-status'; st.textContent = '';
+          sendCheckout('utr_number', utr,
+            'CHECKOUT FORM - customer paid by UPI and submitted their UTR number.\nUPI payment PENDING CONFIRMATION - please verify receipt (may take up to 1 hour) before confirming the care plan.\nUTR number: ' + utr)
+            .then(function(sent){
+              if(!sent) throw new Error('failed');
+              finishStep('<h3>Details submitted</h3><p class="step-done">Thank you, ' + firstName + '. Our team is confirming your payment. It will take up to 1 hour. Our team will reach back to you soon.</p>');
+            })
+            .catch(function(){
+              utrBtn.disabled = false; utrBtn.textContent = 'Submit UTR & complete booking request';
+              st.className = 'step-status bad';
+              st.textContent = 'Sorry, something went wrong. Please try again in a moment - or WhatsApp us your name and UTR number.';
+            });
+        });
+      } else {
+        var cxBtn = document.getElementById('crypto-submit');
+        cxBtn.addEventListener('click', function(){
+          var txid = document.getElementById('txid-input').value.trim();
+          var st = document.getElementById('crypto-status');
+          cxBtn.disabled = true; cxBtn.textContent = 'Submitting...';
+          st.className = 'step-status'; st.textContent = '';
+          sendCheckout('payment_reference', txid || '(not provided)',
+            'CHECKOUT FORM - customer returned after crypto payment and submitted their details.\nCrypto payment PENDING VERIFICATION - please check NOWPayments before confirming the care plan.\nTransaction reference: ' + (txid || '(not provided)'))
+            .then(function(sent){
+              if(!sent) throw new Error('failed');
+              finishStep('<h3>Details submitted</h3><p class="step-done">Thank you, ' + firstName + '. Our team is verifying your crypto payment and will reach back to you soon to confirm your care plan.</p>');
+            })
+            .catch(function(){
+              cxBtn.disabled = false; cxBtn.textContent = 'I have completed my crypto payment - submit details';
+              st.className = 'step-status bad';
+              st.textContent = 'Sorry, something went wrong. Please try again in a moment - or WhatsApp us your name and payment reference.';
+            });
+        });
+      }
     }
   }
   var serviceSel = document.getElementById('f-service');
@@ -179,7 +279,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remov
     });
     var button = document.getElementById('send-btn');
     button.textContent = query ? 'Send Enquiry' : 'Continue to Payment';
-    document.getElementById('route-note').textContent = unsure ? 'Not sure which care is right? Share your needs and we will help you choose. Your enquiry goes to Kunalji Nursing Care Service.' : query ? 'Your service details and contact information will be sent to Kunalji Nursing Care Service. Payment can be arranged later.' : 'Checkout details: enter your contact details, then continue to payment. Your details are sent to Kunalji Nursing Care Service so we can confirm your care plan.';
+    document.getElementById('route-note').textContent = unsure ? 'Not sure which care is right? Share your needs and we will help you choose. Your enquiry goes to Kunalji Nursing Care Service.' : query ? 'Your service details and contact information will be sent to Kunalji Nursing Care Service. Payment can be arranged later.' : 'Checkout details: enter your contact details, then continue to payment. Nothing is sent yet - after paying, a final confirmation step on the payment page sends your details to Kunalji Nursing Care Service.';
     var auto = !query ? '' : unsure ? 'Please help me choose the right care service. ' : service ? 'I would like to avail ' + service + ' (' + rates[service] + '). ' : '';
     if(!msg.value.trim() || msg.value === lastAutoMessage) { msg.value = auto; lastAutoMessage = auto; }
     document.getElementById('e-service').style.display='none';
