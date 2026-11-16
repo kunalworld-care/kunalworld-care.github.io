@@ -86,7 +86,7 @@ export default {
       var orderDesc = (service + (desc ? ' - ' + desc : '')).slice(0, 190);
       var payload = {
         price_amount: amount,
-        price_currency: 'usdt',
+        price_currency: 'usd',
         order_id: orderId,
         order_description: orderDesc,
         ipn_callback_url: 'https://kunalji-pay.dx1qne.workers.dev/ipn',
@@ -119,7 +119,7 @@ export default {
 
       var st = String(params.payment_status || '').toLowerCase();
       var oid = params.order_id || '(no ref)';
-      var amt = String(params.price_amount) + ' ' + String(params.price_currency);
+      var amt = String(params.price_amount) + ' USD (USDT-equivalent)';
       var pay = String(params.pay_amount) + ' ' + String(params.pay_currency);
       var odesc = params.order_description || '';
       var subject = null;
